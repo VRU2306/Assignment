@@ -8,44 +8,22 @@ const { validationResult } = require("express-validator");
  */
  exports.fetchmodel = async (req, res) => {
     // Check for query parameter validation errors
-    const results = validationResult(req);
-
-    // In case of any validation errors, send a 400 (Bad Request)
-    // to the client with an error message
-    if (!results.isEmpty()) {
-        res.status(400)
-            .json({ msg: results.array()[0].msg });
-
-        return;
-    }
-    try {
-        filter = {};
-        // If an ID is supplied through the chapter parameter, fetch the single
-        // chapter by ID and send it to the client
-        if (req.query.tasks) {
-            filter._id = { $in: req.query.tasks.split(',') };
-
-            const chapters = await Task.find(filter);
-            if (!chapters) {
-                res.sendStatus(404);
-
-                return;
-
-            }
-            console.log("456",chapters)
-            res.status(200).json(chapters);
-            return;
-        }
-        
-     
+    const Tasks = await Task.find()
+    console.log(Tasks)
+    return res.json(Tasks)
     
-        res.status(400)
-            .json({ msg: "No search parameters provided" });
+}
 
-    } catch (e) {
-        // In case of an internal server error, log the error and send
-        // a 500 (Internal Server Error) to the client
-        console.error(e);
-        res.sendStatus(500);
+exports.getmodel = async (req, res) => {
+    // Check for query parameter validation errors
+    try{
+        const Tasks = await Task.findById(req.params.id) 
+        
+        const a1 = await Tasks.save()
+        res.json(a1)   
+        console.log(a1)
+    }catch(err){
+        res.send('Error')
     }
 }
+
