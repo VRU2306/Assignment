@@ -26,6 +26,18 @@ router.route("/create").post(
     tasks.taskc,
 
 );
+router.route("/delete/:id").delete(
+    // console.log("11111"),
+    // taskCreateValidators,
+    tasks.delete,
+
+);
+router.route("/update/:id").put(
+    // console.log("11111"),
+    // taskCreateValidators,
+    tasks.update,
+
+);
 
 
 module.exports = router;

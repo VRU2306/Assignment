@@ -14,7 +14,10 @@ mongoose.connect('mongodb+srv://Vineeth_11_:checking123@cluster0-z6unz.mongodb.n
 
 const app=express();
 app.use(express.json());
-
+app.use(cors({
+    origin:"http://localhost:4200",
+    credentials: true
+}));
 app.use("/task",task.taskRouter)
 app.use("/tasks",fetchtask.taskRouter)
 app.use("/subtask",subtask.taskRouters)
