@@ -1,13 +1,14 @@
 const express = require("express");
 const Task=require("../../models/createtaskmodel")
 const { validationResult } = require("express-validator");
+const { xmlParser } = require("config/parser");
 /** 
  * @param {express.Request} req
  * @param {express.Response} res
  */
 exports.taskc=async(req,res) =>{
     const results = validationResult(req);
-
+    let x = Math.floor((Math.random() * 100) + 1);
     // In case of any validation errors, send a 400 (Bad Request)
     // to the client with an error message
     if (!results.isEmpty()) {
@@ -18,8 +19,10 @@ exports.taskc=async(req,res) =>{
     }
     try{
         const tasks = new Task({
+            uid:x,
             title:  req.body.title,
             description: req.body.description,
+            remainder:req.body.remainder?req.body.remainder:false,
         
         });
         await tasks.save();

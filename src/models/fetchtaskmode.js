@@ -7,9 +7,7 @@ const fetchtaskSchema = new Schema({
         required: true,
         maxLength: 30
     },
-    _id:{
-        type:String,
-    }
+  
 }, {
     timestamps: true
 });
